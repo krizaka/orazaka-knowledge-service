@@ -63,7 +63,7 @@ logging:
       total-size-cap: 10MB
       max-history: 7
   level:
-    com.orazaka.knowledgeservice: DEBUG
+    com.krizaka.orazaka.knowledgeservice: DEBUG
     org.springframework.amqp: INFO
 
 # ── Orazaka — service-owned wiring ────────────────────────────────────────────
