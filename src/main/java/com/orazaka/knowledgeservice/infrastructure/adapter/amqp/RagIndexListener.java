@@ -1,7 +1,7 @@
 package com.orazaka.knowledgeservice.infrastructure.adapter.amqp;
 
+import com.krizaka.messaging.dedup.MessageDedup;
 import com.orazaka.knowledgeservice.application.service.IngestionService;
-import com.orazaka.knowledgeservice.application.service.MessageDedupService;
 import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +23,11 @@ public class RagIndexListener {
   private static final String DEDUP_CONSUMER = "knowledge.rag-index";
 
   private final IngestionService ingestionService;
-  private final MessageDedupService messageDedupService;
+  private final MessageDedup messageDedupService;
 
-  public RagIndexListener(
-      IngestionService ingestionService, MessageDedupService messageDedupService) {
+  public RagIndexListener(IngestionService ingestionService, MessageDedup messageDedupService) {
     this.ingestionService = Objects.requireNonNull(ingestionService, "IngestionService required");
-    this.messageDedupService =
-        Objects.requireNonNull(messageDedupService, "MessageDedupService required");
+    this.messageDedupService = Objects.requireNonNull(messageDedupService, "MessageDedup required");
   }
 
   @RabbitListener(queues = "orazaka.jobs.rag")

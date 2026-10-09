@@ -5,15 +5,15 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.krizaka.messaging.dedup.MessageDedup;
 import com.orazaka.knowledgeservice.application.service.IngestionService;
-import com.orazaka.knowledgeservice.application.service.MessageDedupService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class RagIndexListenerTest {
 
   private final IngestionService ingestionService = mock(IngestionService.class);
-  private final MessageDedupService dedup = mock(MessageDedupService.class);
+  private final MessageDedup dedup = mock(MessageDedup.class);
   private final RagIndexListener listener = new RagIndexListener(ingestionService, dedup);
 
   @Test
