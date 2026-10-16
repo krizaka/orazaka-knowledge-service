@@ -1,7 +1,5 @@
 package com.krizaka.orazaka.knowledgeservice.architecture;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
 import com.krizaka.orazaka.test.architecture.ConfigBindingRules;
 import com.krizaka.orazaka.test.architecture.GovernanceRules;
 import com.krizaka.orazaka.test.architecture.LoggedContentRules;
@@ -46,112 +44,76 @@ class KnowledgeServiceGovernanceTest {
   @Test
   @DisplayName("[DOOR-001] no inbound HTTP entry dispatches a job")
   void noInboundEntryDispatchesAJob() {
-    assertDoesNotThrow(
-        () -> {
-          RunSurfaceRules.assertNoInboundEntryDispatchesAJob();
-        });
+    RunSurfaceRules.assertNoInboundEntryDispatchesAJob();
   }
 
   @Test
   @DisplayName("[SEAM-002] knowledge-service depends on no foreign Tier-3 implementation")
   void dependsOnNoForeignTier3() {
-    assertDoesNotThrow(
-        () -> {
-          GovernanceRules.assertNoForeignTier3Dependency(productionClasses, BASE_PACKAGE);
-        });
+    GovernanceRules.assertNoForeignTier3Dependency(productionClasses, BASE_PACKAGE);
   }
 
   @Test
   @DisplayName("[ADR-035] no SecurityConfig opens /internal/** or /uploads/**")
   void internalAndMediaSurfacesStayAuthenticated() {
-    assertDoesNotThrow(
-        () -> {
-          GovernanceRules.assertNoPermitAllOnInternalOrUploads(
-              Path.of(System.getProperty("user.dir"), "src", "main", "java"));
-        });
+    GovernanceRules.assertNoPermitAllOnInternalOrUploads(
+        Path.of(System.getProperty("user.dir"), "src", "main", "java"));
   }
 
   @Test
   @DisplayName("[ADR-035] /internal/v1 demands the SERVICE authority, not merely authentication")
   void internalSurfaceDemandsServiceAuthority() {
-    assertDoesNotThrow(
-        () -> {
-          GovernanceRules.assertInternalSurfaceRequiresServiceAuthority(
-              Path.of(System.getProperty("user.dir"), "src", "main", "java"));
-        });
+    GovernanceRules.assertInternalSurfaceRequiresServiceAuthority(
+        Path.of(System.getProperty("user.dir"), "src", "main", "java"));
   }
 
   @Test
   @DisplayName("[AGENTS.md §4] requests run on virtual threads")
   void requestsRunOnVirtualThreads() {
-    assertDoesNotThrow(
-        () -> {
-          GovernanceRules.assertVirtualThreadsEnabled(Path.of(System.getProperty("user.dir")));
-        });
+    GovernanceRules.assertVirtualThreadsEnabled(Path.of(System.getProperty("user.dir")));
   }
 
   @Test
   @DisplayName("[PACK-002] no pack, studio or pack-capability key is a literal in engine code")
   void noPackKeyLiteralsInEngineCode() {
-    assertDoesNotThrow(
-        () -> {
-          GovernanceRules.assertNoPackKeyLiterals(REPOSITORY_ROOT);
-        });
+    GovernanceRules.assertNoPackKeyLiterals(REPOSITORY_ROOT);
   }
 
   @Test
   @DisplayName("[PACK-003] engine code never branches on a pack identifier")
   void noPackKeyConditionalsInEngineCode() {
-    assertDoesNotThrow(
-        () -> {
-          GovernanceRules.assertNoPackKeyConditionals(REPOSITORY_ROOT);
-        });
+    GovernanceRules.assertNoPackKeyConditionals(REPOSITORY_ROOT);
   }
 
   @Test
   @DisplayName("[EXEC-001] every in-process capability's handler_key has an executor")
   void everyCapabilityHasAnExecutor() {
-    assertDoesNotThrow(
-        () -> {
-          GovernanceRules.assertEveryCapabilityHasAnExecutor(REPOSITORY_ROOT);
-        });
+    GovernanceRules.assertEveryCapabilityHasAnExecutor(REPOSITORY_ROOT);
   }
 
   @Test
   @DisplayName("[EXEC-002] every capability's routing_key is drained by a declared worker")
   void everyCapabilityIsDrained() {
-    assertDoesNotThrow(
-        () -> {
-          GovernanceRules.assertEveryCapabilityIsDrained(REPOSITORY_ROOT);
-        });
+    GovernanceRules.assertEveryCapabilityIsDrained(REPOSITORY_ROOT);
   }
 
   @Test
   @DisplayName(
       "[CFG-001] every type the configuration binder builds has a constructor it can choose")
   void configurationBindsUnambiguously() {
-    assertDoesNotThrow(
-        () -> {
-          ConfigBindingRules.assertConfigurationBindsUnambiguously();
-          ConfigBindingRules.assertInjectableComponentsHaveOneConstructor();
-        });
+    ConfigBindingRules.assertConfigurationBindsUnambiguously();
+    ConfigBindingRules.assertInjectableComponentsHaveOneConstructor();
   }
 
   @Test
   @DisplayName("[ERR-113] No Environment injection in production beans")
   void noEnvironmentInjection() {
-    assertDoesNotThrow(
-        () -> {
-          SourceFileScanner.assertNoEnvironmentInjection(Path.of("src", "main", "java"));
-        });
+    SourceFileScanner.assertNoEnvironmentInjection(Path.of("src", "main", "java"));
   }
 
   /** [LOG-001] no logging call takes a prompt, a response body or a message text (ADR-064). */
   @Test
   void noLoggingCallTakesContent() {
-    assertDoesNotThrow(
-        () -> {
-          LoggedContentRules.assertNoLoggingCallTakesContent();
-        });
+    LoggedContentRules.assertNoLoggingCallTakesContent();
   }
 }
