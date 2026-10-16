@@ -73,6 +73,12 @@ orazaka:
       url: ${KNOWLEDGE_DB_URL:jdbc:postgresql://localhost:5432/orazaka_knowledge_db}
       username: ${KNOWLEDGE_DB_USERNAME:orazaka_knowledge}
       password: ${KNOWLEDGE_DB_PASSWORD}
+    # Recommendations (ADR-078): item texts are embedded by the platform's embedding endpoint on
+    # the conversation service, on behalf of the calling tenant. Its parameters are data
+    # (reco_settings), never here.
+    recommendation:
+      embeddings-base-url: ${ROUTER_INTERNAL_URL:http://localhost:8080}
+      embeddings-timeout: 20s
 
 # ── Krizaka platform kit ──────────────────────────────────────────────────────
 krizaka:
