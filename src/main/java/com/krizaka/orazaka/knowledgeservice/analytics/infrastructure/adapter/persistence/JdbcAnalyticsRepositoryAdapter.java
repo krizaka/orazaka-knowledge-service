@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -216,7 +217,8 @@ class JdbcAnalyticsRepositoryAdapter implements AnalyticsRepository {
       int limit) {
     String positive = PgArrays.text(positiveKinds);
     List<Object> args = new ArrayList<>(List.of(positive, positive));
-    args.addAll(List.of(scope(tenant, range, owner)));
+    // Arrays.asList, not List.of: the owner is null when the whole product is asked for.
+    args.addAll(Arrays.asList(scope(tenant, range, owner)));
     args.add(positive);
     args.add(minAudience);
     args.add(limit);
@@ -296,7 +298,7 @@ class JdbcAnalyticsRepositoryAdapter implements AnalyticsRepository {
     StringBuilder sql = new StringBuilder("WITH s1 AS (SELECT subject_id, min(occurred_at) AS t");
     sql.append(" FROM analytics_event_all WHERE").append(SCOPE).append(" AND kind = ?");
     sql.append(" GROUP BY subject_id)");
-    List<Object> args = new ArrayList<>(List.of(scope(tenant, range, owner)));
+    List<Object> args = new ArrayList<>(Arrays.asList(scope(tenant, range, owner)));
     args.add(kinds.get(0));
     for (int i = 1; i < kinds.size(); i++) {
       sql.append(", s")
