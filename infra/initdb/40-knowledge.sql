@@ -136,6 +136,91 @@ INSERT INTO reco_settings (tenant_id, version, settings, reason, created_by) VAL
 }', 'ADR-078: the first transparent weights', 'migration');
 
 -- ============================================================================
+-- ANALYTICS (ADR-081) — a product's events in; KPIs, cohorts, funnels and top
+-- items out, per tenant. Same database and pool as the recommender: one write,
+-- two reads. Subjects are PSEUDONYMS (HMAC by the product); items and owners are
+-- its public ids. Kept identical to the incremental script
+-- infra/migrations/2026-10-17-analytics.sql (workspace).
+-- ============================================================================
+CREATE TYPE analytics_value_unit AS ENUM ('none', 'percent', 'seconds', 'cents', 'count');
+CREATE TYPE analytics_kind_source AS ENUM ('analytics', 'recommender');
+
+-- The kinds a tenant may send — data, not code: '*' for every tenant, or one tenant's own.
+-- A 'recommender' kind is sent to /api/v1/recommendations/events, never twice.
+CREATE TABLE analytics_event_kind (
+    tenant_id VARCHAR(64) NOT NULL,
+    kind VARCHAR(32) NOT NULL CHECK (kind ~ '^[a-z][a-z0-9_]{1,31}$'),
+    unit analytics_value_unit NOT NULL DEFAULT 'none',
+    source analytics_kind_source NOT NULL DEFAULT 'analytics',
+    description TEXT NOT NULL,
+    PRIMARY KEY (tenant_id, kind)
+);
+
+CREATE TABLE analytics_event (
+    tenant_id VARCHAR(64) NOT NULL,
+    event_id VARCHAR(64) NOT NULL,
+    subject_id VARCHAR(128) NOT NULL,
+    kind VARCHAR(32) NOT NULL,
+    item_id VARCHAR(64),
+    owner_id VARCHAR(64),
+    value DOUBLE PRECISION,
+    occurred_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    received_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (tenant_id, event_id)
+);
+CREATE INDEX analytics_event_time_idx ON analytics_event (tenant_id, occurred_at);
+CREATE INDEX analytics_event_subject_idx ON analytics_event (tenant_id, subject_id, occurred_at);
+CREATE INDEX analytics_event_owner_idx ON analytics_event (tenant_id, owner_id, occurred_at);
+
+-- Every insight reads this view: the analytics events and the recommender's, the latter
+-- lower-cased, its watched share as the value and its item's creator as the owner.
+CREATE VIEW analytics_event_all AS
+    SELECT tenant_id, event_id, subject_id, kind, item_id, owner_id, value, occurred_at
+      FROM analytics_event
+    UNION ALL
+    SELECT e.tenant_id, e.event_id, e.user_id, lower(e.kind::text), e.item_id,
+           COALESCE(e.creator_id, i.creator_id), e.watched_pct::double precision, e.occurred_at
+      FROM reco_event e
+      LEFT JOIN reco_item i ON i.tenant_id = e.tenant_id AND i.item_id = e.item_id;
+
+-- The parameters, versioned like reco_settings (ADR-081 §5).
+CREATE TABLE analytics_settings (
+    tenant_id VARCHAR(64) NOT NULL,
+    version INTEGER NOT NULL CHECK (version >= 1),
+    settings JSONB NOT NULL,
+    reason TEXT NOT NULL,
+    created_by VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (tenant_id, version)
+);
+
+INSERT INTO analytics_event_kind (tenant_id, kind, unit, source, description) VALUES
+    ('*', 'view', 'percent', 'recommender', 'An item was viewed; the value is the share watched.'),
+    ('*', 'like', 'none', 'recommender', 'An item was liked.'),
+    ('*', 'save', 'none', 'recommender', 'An item was saved.'),
+    ('*', 'share', 'none', 'recommender', 'An item was shared.'),
+    ('*', 'tip', 'none', 'recommender', 'A creator was tipped on an item.'),
+    ('*', 'unlock', 'none', 'recommender', 'A paid item was unlocked.'),
+    ('*', 'follow', 'none', 'recommender', 'A creator was followed.'),
+    ('*', 'unfollow', 'none', 'recommender', 'A creator was unfollowed.'),
+    ('*', 'skip', 'none', 'recommender', 'An item was skipped.'),
+    ('*', 'report', 'none', 'recommender', 'An item was reported.'),
+    ('*', 'session_start', 'none', 'analytics', 'A person opened the product.'),
+    ('*', 'watch', 'percent', 'analytics', 'A person left an item; the value is the share watched.'),
+    ('*', 'talk', 'seconds', 'analytics', 'A voice conversation ended; the value is its length.'),
+    ('*', 'batch_open', 'none', 'analytics', 'A batch of candidates was opened.'),
+    ('*', 'batch_answer', 'none', 'analytics', 'A candidate of a batch was answered.'),
+    ('*', 'intro_start', 'none', 'analytics', 'An introduction was started.'),
+    ('*', 'report_filed', 'none', 'analytics', 'A person was reported.'),
+    ('*', 'purchase', 'cents', 'analytics', 'Something was bought; the value is its price.');
+
+INSERT INTO analytics_settings (tenant_id, version, settings, reason, created_by) VALUES ('*', 1, '{
+  "retentionDays": 180, "minAudience": 3, "maxRangeDays": 366, "cohortWeeks": 8,
+  "funnelWindowHours": 168, "topItems": 10,
+  "positiveKinds": ["like", "save", "share", "tip", "unlock", "batch_answer", "intro_start", "purchase"]
+}', 'ADR-081: the first analytics parameters', 'migration');
+
+-- ============================================================================
 -- KNOWLEDGE SEED DATA
 -- ============================================================================
 

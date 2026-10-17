@@ -7,11 +7,11 @@ import java.util.Collection;
  * element is double-quoted with {@code "} and {@code \} escaped, so the literal is a value, never
  * SQL, whatever the element holds.
  */
-final class PgArrays {
+public final class PgArrays {
 
   private PgArrays() {}
 
-  static String text(Collection<String> values) {
+  public static String text(Collection<String> values) {
     StringBuilder out = new StringBuilder("{");
     boolean first = true;
     for (String v : values) {
