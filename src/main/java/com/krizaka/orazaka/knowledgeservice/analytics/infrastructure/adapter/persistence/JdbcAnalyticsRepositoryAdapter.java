@@ -299,7 +299,7 @@ class JdbcAnalyticsRepositoryAdapter implements AnalyticsRepository {
     sql.append(" FROM analytics_event_all WHERE").append(SCOPE).append(" AND kind = ?");
     sql.append(" GROUP BY subject_id)");
     List<Object> args = new ArrayList<>(Arrays.asList(scope(tenant, range, owner)));
-    args.add(kinds.get(0));
+    args.add(kinds.getFirst());
     for (int i = 1; i < kinds.size(); i++) {
       sql.append(", s")
           .append(i + 1)

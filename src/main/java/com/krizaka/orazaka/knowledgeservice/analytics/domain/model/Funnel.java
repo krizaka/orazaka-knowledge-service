@@ -57,7 +57,7 @@ public record Funnel(
       throw new IllegalArgumentException("one count per step");
     }
     List<FunnelStep> steps = new ArrayList<>();
-    long first = reached.isEmpty() ? 0 : reached.get(0);
+    long first = reached.isEmpty() ? 0 : reached.getFirst();
     for (int i = 0; i < kinds.size(); i++) {
       long n = reached.get(i);
       if (n < minAudience) {

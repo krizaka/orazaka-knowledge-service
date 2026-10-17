@@ -98,8 +98,8 @@ class AnalyticsModelTest {
     Range r =
         new Range(Instant.parse("2026-10-01T00:00:00Z"), Instant.parse("2026-10-15T00:00:00Z"));
     Funnel f = Funnel.of(r, null, 168, 3, List.of("view", "like", "tip"), List.of(8L, 4L, 1L));
-    assertThat(f.steps().get(0).subjects()).isEqualTo(8);
-    assertThat(f.steps().get(0).fromPrevious()).isNull();
+    assertThat(f.steps().getFirst().subjects()).isEqualTo(8);
+    assertThat(f.steps().getFirst().fromPrevious()).isNull();
     assertThat(f.steps().get(1).fromPrevious()).isEqualTo(0.5);
     assertThat(f.steps().get(1).fromFirst()).isEqualTo(0.5);
     assertThat(f.steps().get(2).suppressed()).isTrue();
