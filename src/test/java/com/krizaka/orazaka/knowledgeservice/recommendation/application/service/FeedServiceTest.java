@@ -102,7 +102,7 @@ class FeedServiceTest {
   @Test
   @DisplayName("similar: never the item itself; an unknown item is a 404")
   void similar() {
-    when(repository.item("t", "jazz")).thenReturn(Optional.of(CATALOGUE.get(0)));
+    when(repository.item("t", "jazz")).thenReturn(Optional.of(CATALOGUE.getFirst()));
     when(repository.nearest(eq("t"), any(), anyInt()))
         .thenReturn(Map.of("jazz", 1.0, "seen", 1.0, "cook", 0.1));
     Feed feed = feeds.similar("t", "jazz", 5, Set.of());

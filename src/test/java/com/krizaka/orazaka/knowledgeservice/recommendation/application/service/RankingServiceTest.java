@@ -49,7 +49,7 @@ class RankingServiceTest {
             2,
             Fixtures.NOW);
     assertThat(ranked).extracting(RankedItem::itemId).containsExactly("near", "far");
-    assertThat(ranked.get(0).reasons()).contains(Reason.SIMILAR);
+    assertThat(ranked.getFirst().reasons()).contains(Reason.SIMILAR);
   }
 
   @Test
@@ -61,7 +61,7 @@ class RankingServiceTest {
             Fixtures.settings(),
             1,
             Fixtures.NOW);
-    assertThat(ranked.get(0).reasons()).containsExactly(Reason.FRESH);
+    assertThat(ranked.getFirst().reasons()).containsExactly(Reason.FRESH);
   }
 
   @Test
