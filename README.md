@@ -65,6 +65,10 @@ Requirements: JDK 21, Docker (Testcontainers integration tests).
 This repository follows the Orazaka governance contract — [AGENTS.md](https://github.com/krizaka/orazaka/blob/main/AGENTS.md)
 in the workspace is normative; the local [AGENTS.md](AGENTS.md) only scopes it to this repository.
 
+## CI
+
+The pipeline is the organisation's reusable [`java-ci.yml`](https://github.com/krizaka/.github/blob/main/.github/workflows/java-ci.yml): this service is verified inside the Orazaka workspace against its upstreams built from source. A change that touches only documentation skips the build and still reports green.
+
 ## License
 
 Apache License 2.0 — see [LICENSE](LICENSE) and [NOTICE](NOTICE).
