@@ -41,9 +41,29 @@ CREATE TABLE orazaka_tools_rag_source (
     ingested BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     user_id VARCHAR(255),
-    CONSTRAINT unique_tool_content UNIQUE (tool_id, content)
+    -- ACCESS (orazaka-ai-engine#107, ADR-091). A source belongs to one tenant ('*' = the platform's own
+    -- content, written by operators only) and is readable by its owner (user_id) and by the principals
+    -- listed here, written 'role:<ROLE>', 'group:<GROUP>' or 'user:<id>'. No tenant, no row: the column
+    -- has no default, so an insert that forgets it fails instead of being readable by everyone.
+    tenant_id VARCHAR(64) NOT NULL,
+    acl_principals TEXT[] NOT NULL DEFAULT '{}',
+    CONSTRAINT unique_tool_content UNIQUE (tenant_id, tool_id, content)
 );
 CREATE INDEX idx_tools_rag_source_user ON orazaka_tools_rag_source(user_id);
+CREATE INDEX idx_tools_rag_source_tenant ON orazaka_tools_rag_source(tenant_id, tool_id);
+
+-- Every refused read: who (the verified principal), which resource, why. Never the query or the content (ADR-064).
+CREATE TABLE knowledge_access_audit (
+    id BIGSERIAL PRIMARY KEY,
+    occurred_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    tenant_id VARCHAR(64),
+    subject VARCHAR(255),
+    action VARCHAR(32) NOT NULL,
+    resource_kind VARCHAR(32) NOT NULL,
+    resource_id VARCHAR(255) NOT NULL,
+    reason VARCHAR(64) NOT NULL
+);
+CREATE INDEX idx_knowledge_access_audit_time ON knowledge_access_audit(occurred_at);
 
 -- ============================================================================
 -- RECOMMENDATIONS (ADR-078) — a two-stage recommender served to a product's
