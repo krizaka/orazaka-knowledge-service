@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 /**
  * Who a read is made for: the verified principal the core sends in the {@code act} claim of its
- * signed service token (ADR-090). It is never read from a request body or a header — the claim is
+ * signed service token (ADR-091). It is never read from a request body or a header — the claim is
  * covered by the token's signature, so a caller cannot choose it.
  *
  * <p>A principal that cannot be parsed is no principal ({@link #fromClaim} is empty) and the caller

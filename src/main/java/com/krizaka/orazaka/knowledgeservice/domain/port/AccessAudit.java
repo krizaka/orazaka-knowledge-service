@@ -4,7 +4,7 @@ import com.krizaka.orazaka.knowledgeservice.domain.model.ActingPrincipal;
 import java.util.Optional;
 
 /**
- * The record of refused reads (ADR-090). A line names who asked, which resource was refused and why
+ * The record of refused reads (ADR-091). A line names who asked, which resource was refused and why
  * — never the query and never the content (ADR-064).
  */
 public interface AccessAudit {

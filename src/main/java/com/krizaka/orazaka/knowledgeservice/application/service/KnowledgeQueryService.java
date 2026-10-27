@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
  * when nothing is available — an unreachable vector store or no matching rows must never fail the
  * caller (RAG enrichment and tool lookup are additive).
  *
- * <p><b>Both are made for a principal, and both filter inside the query</b> (ADR-090): the tenant
+ * <p><b>Both are made for a principal, and both filter inside the query</b> (ADR-091): the tenant
  * and the ACL are part of the SQL {@code WHERE} and of the vector search's filter, so a passage the
  * caller may not read is never fetched — not ranked, not counted, not put in a prompt or a cache.
  * Neither method has an overload without a principal, and a caller that acts for nobody is refused

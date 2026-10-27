@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  * endpoints return a uniform {@link ContentResponse} whose content is empty when nothing is
  * available.
  *
- * <p><b>Every call is made for a principal</b> (ADR-090): the {@code act} claim of the verified
+ * <p><b>Every call is made for a principal</b> (ADR-091): the {@code act} claim of the verified
  * token. A call that acts for nobody is refused with 403 and audited, whatever its body says — the
  * body names no user, tenant or role.
  */

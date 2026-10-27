@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
  * ingested. Dormant until an embedding-model-backed {@link VectorStore} bean exists — with none, a
  * request is a logged no-op (honest skip, never a fake success): there is nothing to embed into.
  *
- * <p><b>A passage carries its source's access rule</b> (ADR-090): tenant, owner and one flag per
+ * <p><b>A passage carries its source's access rule</b> (ADR-091): tenant, owner and one flag per
  * ACL entry are written as metadata with the text, so the store can filter on them before ranking.
  * A passage has a stable id, and indexing a source first removes what it indexed before — changing
  * an ACL and re-indexing replaces the metadata, it never leaves the old grants behind.

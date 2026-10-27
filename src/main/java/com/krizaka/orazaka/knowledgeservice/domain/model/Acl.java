@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * The access rule of a source and of every passage indexed from it (ADR-090): one tenant, an owner,
+ * The access rule of a source and of every passage indexed from it (ADR-091): one tenant, an owner,
  * and the principals ({@code role:…}, {@code group:…}, {@code user:…}) allowed to read it.
  *
  * <p>The same rule is written twice and must stay the same: as SQL in {@code

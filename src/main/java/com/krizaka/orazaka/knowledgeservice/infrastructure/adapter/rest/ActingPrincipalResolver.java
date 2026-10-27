@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.security.oauth2.jwt.Jwt;
 
 /**
- * Reads who a call is made for from the {@code act} claim of its verified service token (ADR-090).
+ * Reads who a call is made for from the {@code act} claim of its verified service token (ADR-091).
  * The token's signature was checked by the resource server before a controller runs, so the claim
  * is the core's word and not the caller's.
  */

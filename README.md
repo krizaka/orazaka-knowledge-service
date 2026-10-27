@@ -77,3 +77,13 @@ run, modify and self-host it for any purpose except offering a competing service
 years after its release. Commits before the licence change remain [Apache-2.0](LICENSE-APACHE) — see [NOTICE](NOTICE)
 and [ADR-012](https://github.com/krizaka/.github/blob/main/docs/adr/ADR-012-licensing-libraries-open-products-fair-source.md).
 The Krizaka names and birds are not licensed: [trademark policy](https://github.com/krizaka/.github/blob/main/TRADEMARKS.md).
+
+## Access (ADR-091)
+
+Every read is made for a verified principal: the `act` claim of the core's signed service token
+(tenant, subject, roles, groups). A source carries `tenant_id` and `acl_principals`
+(`role:…`, `group:…`, `user:…`; default the owner alone); the tenant and the ACL are part of the SQL
+`WHERE` and of the vector filter, so an unreadable passage is never fetched. A call that acts for
+nobody is refused (403) and audited in `knowledge_access_audit` (principal, resource id, reason — never
+the content). `PUT /internal/v1/knowledge/sources/{id}/acl` lets an administrator of the tenant change
+who may read a source.

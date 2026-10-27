@@ -2,7 +2,7 @@ package com.krizaka.orazaka.knowledgeservice.infrastructure.adapter.rest.dto;
 
 /**
  * Request for a tool RAG-source substring search. It names no user, tenant or role: who is asking
- * comes from the verified token, never from the body (ADR-090).
+ * comes from the verified token, never from the body (ADR-091).
  *
  * @param toolId the tool whose sources to search
  * @param query the search text; blank returns every readable source for the tool

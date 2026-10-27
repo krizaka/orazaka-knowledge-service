@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 /**
- * Who may read a source is data an administrator sets (ADR-090): this replaces a source's ACL. Only
+ * Who may read a source is data an administrator sets (ADR-091): this replaces a source's ACL. Only
  * an administrator of the source's own tenant may, and a source of another tenant (or of the
  * platform) answers exactly as a missing one. The source is indexed again under the new rule in the
  * same call, so the change holds on the next request.
