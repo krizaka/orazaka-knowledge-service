@@ -1,5 +1,5 @@
 {
-  "$comment": "The recommendations contract (ADR-078 \u00a76) \u2014 kept IDENTICAL in krizaka/orazaka-knowledge-service (src/test/resources/contract/) and krizaka/orochia (apps/web/lib/recommendations/). Orazaka's flow test sends every request and checks each live answer has exactly the shape of the response here; Orochia's tests build the same requests and parse these responses.",
+  "$comment": "The recommendations contract (ADR-078 \u00a76) \u2014 kept IDENTICAL in krizaka/orazaka-knowledge-service (src/test/resources/contract/) and in each product that reads it. Orazaka's flow test sends every request and checks each live answer has exactly the shape of the response here; the products' tests build the same requests and parse these responses.",
   "version": 1,
   "events": {
     "request": {
