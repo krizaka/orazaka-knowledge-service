@@ -38,7 +38,7 @@ import tools.jackson.databind.json.JsonMapper;
  * close vectors). Also the service's context-load test with its deployment wiring (KNOWLEDGE_DB_*,
  * the JWT secret, the conversation service's URL), and the contract test: every request of {@code
  * contract/recommendations-contract.json} is sent and every live answer must have exactly the shape
- * of the recorded one — the same file Orochia's tests read.
+ * of the recorded one — the same file the products' tests read.
  */
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
