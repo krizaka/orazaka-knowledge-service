@@ -52,4 +52,4 @@ jobs:
     uses: krizaka/orazaka/.github/workflows/component.yml@7e70e89478ab174a2c3b9c793f1ff80754e93ce3 # main
     with:
       component: orazaka-knowledge-service
-    secrets: inherit
+    secrets: inherit # zizmor: ignore[secrets-inherit] the org's own pinned pipeline; it reads SONAR_TOKEN and nothing else of the repository's secrets
