@@ -23,7 +23,7 @@ jobs:
   ci:
     permissions:
       contents: read
-    uses: krizaka/.github/.github/workflows/java-ci.yml@70fb536c28d970c5d8125ff08f1ecb7d8570c4fb # v1.0.0
+    uses: krizaka/.github/.github/workflows/java-ci.yml@1d506b702a30ad519ca2561b51bcb981fe680e8e # v1.5.2
     with:
       workspace-component: orazaka-knowledge-service
       rewrite: true
