@@ -42,4 +42,19 @@ class CatalogueItemTest {
   void document() {
     assertThat(item("Jazz trio", List.of("jazz")).document()).isEqualTo("Jazz trio\n#jazz\ndesc");
   }
+
+  @Test
+  @DisplayName("the language is a BCP-47 tag, checked without a backtracking group")
+  void checksLanguageTag() {
+    for (String ok : List.of("en", "fr-CA", "zh-Hant-TW", "eng")) {
+      assertThat(withLanguage(ok).language()).isEqualTo(ok);
+    }
+    for (String bad : List.of("e", "english", "en-", "en--CA", "en-C", "en-CA_x", "-en")) {
+      assertThatThrownBy(() -> withLanguage(bad)).isInstanceOf(IllegalArgumentException.class);
+    }
+  }
+
+  private static CatalogueItem withLanguage(String language) {
+    return new CatalogueItem("v1", "c1", "t", "d", List.of(), language, 10, Fixtures.NOW);
+  }
 }

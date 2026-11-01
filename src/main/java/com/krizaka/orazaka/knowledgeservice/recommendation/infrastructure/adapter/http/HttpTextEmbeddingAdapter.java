@@ -76,6 +76,24 @@ class HttpTextEmbeddingAdapter implements TextEmbeddingClient {
   /** The embeddings endpoint's answer (only what the recommender reads). */
   record EmbeddingAnswer(String runId, String model, List<Datum> data) {
 
-    record Datum(int index, float[] embedding) {}
+    record Datum(int index, float[] embedding) {
+
+      @Override
+      public boolean equals(Object other) {
+        return other instanceof Datum d
+            && index == d.index
+            && java.util.Arrays.equals(embedding, d.embedding);
+      }
+
+      @Override
+      public int hashCode() {
+        return 31 * Integer.hashCode(index) + java.util.Arrays.hashCode(embedding);
+      }
+
+      @Override
+      public String toString() {
+        return "Datum[index=" + index + ", embedding=" + java.util.Arrays.toString(embedding) + "]";
+      }
+    }
   }
 }

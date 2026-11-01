@@ -56,13 +56,27 @@ public record CatalogueItem(
                 .distinct()
                 .limit(MAX_TAGS)
                 .toList();
-    if (language != null && !language.matches("[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8})*")) {
+    if (language != null && !isBcp47(language)) {
       throw new IllegalArgumentException("language must be a BCP-47 tag");
     }
     if (durationSeconds != null && durationSeconds < 0) {
       throw new IllegalArgumentException("durationSeconds must not be negative");
     }
     Objects.requireNonNull(publishedAt, "publishedAt is required");
+  }
+
+  /** A BCP-47 tag: a 2-3 letter primary subtag, then subtags of 2-8 letters or digits. */
+  private static boolean isBcp47(String tag) {
+    String[] parts = tag.split("-", -1);
+    if (!parts[0].matches("[A-Za-z]{2,3}")) {
+      return false;
+    }
+    for (int i = 1; i < parts.length; i++) {
+      if (!parts[i].matches("[A-Za-z0-9]{2,8}")) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /** The text that is embedded: title, tags, description — in that order of weight. */
