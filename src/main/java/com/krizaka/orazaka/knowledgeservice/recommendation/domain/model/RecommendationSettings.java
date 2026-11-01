@@ -55,8 +55,8 @@ public record RecommendationSettings(
       kinds.put(kind, w);
     }
     kindWeights = Map.copyOf(kinds);
-    bounded("halfLifeHours", halfLifeHours, 1, 24 * 365);
-    bounded("freshHalfLifeHours", freshHalfLifeHours, 1, 24 * 365);
+    bounded("halfLifeHours", halfLifeHours, 1, HOURS_PER_YEAR);
+    bounded("freshHalfLifeHours", freshHalfLifeHours, 1, HOURS_PER_YEAR);
     bounded("mmrLambda", mmrLambda, 0, 1);
     bounded("creatorCap", creatorCap, 1, 50);
     bounded("candidatePool", candidatePool, 10, 1000);
@@ -78,6 +78,8 @@ public record RecommendationSettings(
         .filter(k -> !k.targetsCreator() && weightOf(k) > 0)
         .toList();
   }
+
+  private static final double HOURS_PER_YEAR = 24.0 * 365;
 
   private static void bounded(String name, double value, double min, double max) {
     if (!(value >= min && value <= max)) {
