@@ -31,7 +31,9 @@ part of the [Orazaka platform](https://github.com/krizaka/orazaka) by [Krizaka](
 
 Retrieval over pgvector (port `8084`): `/internal/v1/knowledge/retrieve`,
 `/internal/v1/knowledge/sources/search`, and AMQP-driven RAG indexing. Own database
-`orazaka_knowledge_db` (`infra/initdb/40-knowledge.sql`).
+`orazaka_knowledge_db`: the schema is Flyway's `V1__knowledge_baseline.sql`
+(`src/main/resources/db/migration`), applied at startup; `infra/initdb/40-knowledge.sql` only
+creates the role, the database and the `vector` extension for the local compose.
 
 ## Position in the platform
 
