@@ -24,7 +24,7 @@ jobs:
     permissions:
       contents: read
       packages: read # the released krizaka-parent family comes from GitHub Packages (krizaka-internal#2268)
-    uses: krizaka/.github/.github/workflows/java-ci.yml@ee508b528e6edfdad989947b48b49d25e81b1964 # main (packages: read, krizaka-internal#2268)
+    uses: krizaka/.github/.github/workflows/java-ci.yml@78dc5cbc0f0e0cf684a7e89d0d736893134e80a2 # main (packages: read, krizaka-internal#2268)
     with:
       workspace-component: orazaka-knowledge-service
       rewrite: true
