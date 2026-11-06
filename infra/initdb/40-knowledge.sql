@@ -1,5 +1,5 @@
 -- ============================================================================
--- ORAZAKA — Local DB bootstrap · 40 — KNOWLEDGE CONTEXT (RAG sources)
+-- SOVKORA — Local DB bootstrap · 40 — KNOWLEDGE CONTEXT (RAG sources)
 -- ----------------------------------------------------------------------------
 -- Role, database and extension ONLY. The schema is Flyway's: V1__knowledge_baseline.sql in
 -- src/main/resources/db/migration, applied by the service at startup as the database's owner
@@ -7,7 +7,7 @@
 -- ============================================================================
 
 -- The password is NOT set here. psql 15 cannot read the environment (\getenv is 16+)
--- and ERR-125 bans a shell script, so `orazaka start` applies ALTER ROLE from
+-- and ERR-125 bans a shell script, so `sovkora start` applies ALTER ROLE from
 -- KNOWLEDGE_DB_PASSWORD once the container is healthy. A role created without a
 -- password cannot authenticate, so a skipped step fails closed rather than leaving a
 -- guessable one — which is what the committed literal was (ADR-035, audit #5).

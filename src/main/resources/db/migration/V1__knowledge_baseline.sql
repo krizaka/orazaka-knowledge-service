@@ -1,5 +1,5 @@
 -- ============================================================================
--- ORAZAKA — V1 baseline · KNOWLEDGE CONTEXT (RAG sources)
+-- SOVKORA — V1 baseline · KNOWLEDGE CONTEXT (RAG sources)
 -- ----------------------------------------------------------------------------
 -- Owner: Knowledge service — RAG retrieval + tool source lookup + async indexing,
 -- in its OWN database (orazaka_knowledge_db) under its own role since Phase 4.
@@ -35,7 +35,7 @@ CREATE TABLE orazaka_tools_rag_source (
     ingested BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     user_id VARCHAR(255),
-    -- ACCESS (orazaka-ai-engine#107, ADR-091). A source belongs to one tenant ('*' = the platform's own
+    -- ACCESS (sovkora-engine#107, ADR-091). A source belongs to one tenant ('*' = the platform's own
     -- content, written by operators only) and is readable by its owner (user_id) and by the principals
     -- listed here, written 'role:<ROLE>', 'group:<GROUP>' or 'user:<id>'. No tenant, no row: the column
     -- has no default, so an insert that forgets it fails instead of being readable by everyone.
