@@ -2,8 +2,8 @@ package com.krizaka.sovkora.knowledgeservice.recommendation.flow;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.krizaka.sovkora.test.architecture.SqlBoundaryRules;
 import com.krizaka.security.token.ServiceTokenProvider;
+import com.krizaka.sovkora.test.architecture.SqlBoundaryRules;
 import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.io.OutputStream;

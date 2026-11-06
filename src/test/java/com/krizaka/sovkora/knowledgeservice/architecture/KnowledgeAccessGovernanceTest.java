@@ -28,9 +28,9 @@ import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.security.oauth2.jwt.Jwt;
 
 /**
- * [ACL-001] The access rule cannot be skipped by construction (ADR-091, sovkora-engine#107): a
- * read of the knowledge is made for a principal, the vector store is searched in one place — the
- * one that adds the principal's filter — and an internal endpoint cannot be written without the
+ * [ACL-001] The access rule cannot be skipped by construction (ADR-091, sovkora-engine#107): a read
+ * of the knowledge is made for a principal, the vector store is searched in one place — the one
+ * that adds the principal's filter — and an internal endpoint cannot be written without the
  * verified token that names the principal.
  */
 class KnowledgeAccessGovernanceTest {

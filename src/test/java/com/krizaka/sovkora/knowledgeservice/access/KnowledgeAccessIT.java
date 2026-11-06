@@ -24,11 +24,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
- * The scenario of sovkora-engine#107, against the real schema ({@code
- * V1__knowledge_baseline.sql}, applied by Flyway at startup, not copied): an employee asks for the
- * CEO's salary, an HR document holding it is indexed, and the answer is nothing — while an HR
- * member reads it. Every call is made the way the core makes it: a service token acting for a
- * verified principal.
+ * The scenario of sovkora-engine#107, against the real schema ({@code V1__knowledge_baseline.sql},
+ * applied by Flyway at startup, not copied): an employee asks for the CEO's salary, an HR document
+ * holding it is indexed, and the answer is nothing — while an HR member reads it. Every call is
+ * made the way the core makes it: a service token acting for a verified principal.
  */
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
