@@ -5,22 +5,22 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.krizaka.orazaka</groupId>
-        <artifactId>orazaka-parent</artifactId>
+        <groupId>com.krizaka.sovkora</groupId>
+        <artifactId>sovkora-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../../orazaka-libs/orazaka-build/orazaka-parent/pom.xml</relativePath>
+        <relativePath>../../../sovkora-libs/sovkora-build/sovkora-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>orazaka-knowledge-service</artifactId>
-    <name>orazaka-knowledge-service</name>
+    <artifactId>sovkora-knowledge-service</artifactId>
+    <name>sovkora-knowledge-service</name>
     <description>Knowledge service — RAG retrieval + tool source lookup (sync) and async indexing (own database)</description>
 
-    <url>https://github.com/krizaka/orazaka-knowledge-service</url>
+    <url>https://github.com/krizaka/sovkora-knowledge-service</url>
 
     <scm>
-        <url>https://github.com/krizaka/orazaka-knowledge-service</url>
-        <connection>scm:git:https://github.com/krizaka/orazaka-knowledge-service.git</connection>
-        <developerConnection>scm:git:git@github.com:krizaka/orazaka-knowledge-service.git</developerConnection>
+        <url>https://github.com/krizaka/sovkora-knowledge-service</url>
+        <connection>scm:git:https://github.com/krizaka/sovkora-knowledge-service.git</connection>
+        <developerConnection>scm:git:git@github.com:krizaka/sovkora-knowledge-service.git</developerConnection>
     </scm>
     <licenses>
         <license>
@@ -33,8 +33,8 @@
 
 
     <properties>
-        <!-- GitHub Packages repository this artifact is published to (orazaka-parent). -->
-        <orazaka.repository>orazaka-knowledge-service</orazaka.repository>
+        <!-- GitHub Packages repository this artifact is published to (sovkora-parent). -->
+        <sovkora.repository>sovkora-knowledge-service</sovkora.repository>
     </properties>
 
 
@@ -85,7 +85,7 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
-        <!-- JDBC (own database — JdbcTemplate over orazaka_tools_rag_source + processed_messages) -->
+        <!-- JDBC (own database — JdbcTemplate over sovkora_tools_rag_source + processed_messages) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -138,8 +138,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.krizaka.orazaka</groupId>
-            <artifactId>orazaka-test-support</artifactId>
+            <groupId>com.krizaka.sovkora</groupId>
+            <artifactId>sovkora-test-support</artifactId>
         </dependency>
         <dependency>
             <groupId>com.tngtech.archunit</groupId>

@@ -1,7 +1,7 @@
-# Builds and tests orazaka-knowledge-service inside the Orazaka workspace (every upstream repository is
+# Builds and tests sovkora-knowledge-service inside the Sovkora workspace (every upstream repository is
 # built from source at its default branch), then publishes to GitHub Packages on a v* tag.
 # The verification is the org's reusable java-ci.yml (krizaka/.github docs/standards/ci-and-deploy.md): the changes gate, the
-# Maven cache, the timeout and the gate that always reports live there. The publication stays in krizaka/orazaka
+# Maven cache, the timeout and the gate that always reports live there. The publication stays in krizaka/sovkora
 # (component.yml), on a v* tag only, with the write permissions only that job holds.
 name: CI
 
@@ -50,7 +50,7 @@ jobs:
       # The shared component pipeline publishes npm packages with provenance (OIDC): a reusable
       # workflow cannot be granted more than its caller holds, so its absence fails at startup.
       id-token: write
-    uses: krizaka/orazaka/.github/workflows/component.yml@7811f56c86053a9dfd68cd871d8e7102c9b527bb # main
+    uses: krizaka/sovkora/.github/workflows/component.yml@7811f56c86053a9dfd68cd871d8e7102c9b527bb # main
     with:
       component: orazaka-knowledge-service
     secrets: inherit # zizmor: ignore[secrets-inherit] the org's own pinned pipeline; it reads SONAR_TOKEN and nothing else of the repository's secrets

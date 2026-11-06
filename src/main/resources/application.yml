@@ -1,5 +1,5 @@
 # ==============================================================================
-# Orazaka Knowledge Service — application configuration
+# Sovkora Knowledge Service — application configuration
 # ------------------------------------------------------------------------------
 # Internal-only service (no security starter): RAG retrieval + tool source lookup
 # over its OWN database (orazaka_knowledge_db) and async job.rag.* indexing.
@@ -10,7 +10,7 @@
 
 spring:
   application:
-    name: orazaka-knowledge-service
+    name: sovkora-knowledge-service
   threads:
     virtual:
       enabled: true
@@ -79,10 +79,10 @@ logging:
       total-size-cap: 10MB
       max-history: 7
   level:
-    com.krizaka.orazaka.knowledgeservice: DEBUG
+    com.krizaka.sovkora.knowledgeservice: DEBUG
     org.springframework.amqp: INFO
 
-# ── Orazaka — service-owned wiring ────────────────────────────────────────────
+# ── Sovkora — service-owned wiring ────────────────────────────────────────────
 orazaka:
   knowledge-service:
     datasource:
@@ -108,4 +108,4 @@ krizaka:
       # The shared HS256 secret the identity service signs session and service tokens with.
       # krizaka-security validates every request locally with it and refuses to start when it is
       # shorter than 32 characters (256 bits).
-      secret: ${IDENTITY_JWT_SECRET:orazaka-local-dev-identity-jwt-secret-256bit!}
+      secret: ${IDENTITY_JWT_SECRET:sovkora-local-dev-identity-jwt-secret-256bit!}
